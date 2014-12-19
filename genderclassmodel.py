@@ -8,10 +8,14 @@ Revised : 28 March 2014
 
 import csv as csv
 import numpy as np
+from os.path import abspath, expanduser
 
-csv_file_object = csv.reader(open('train.csv', 'rb'))       # Load in the csv file
-header = csv_file_object.next()                             # Skip the fist line as it is a header
-data=[]                                                     # Create a variable to hold the data
+filepath = abspath(expanduser("~/") + '/Documents/GitHub/kaggle_titanic')
+
+csv_file_object = csv.reader(open(          # Load in the csv file
+    filepath + '/train.csv'))                       
+header = next(csv_file_object)              # Skip the fist line as it is a header
+data=[]                                     # Create a variable to hold the data
 
 for row in csv_file_object:                 # Skip through each row in the csv file
     data.append(row)                        # adding each row to the data variable
@@ -20,7 +24,7 @@ data = np.array(data)                       # Then convert from a list to an arr
 # In order to analyse the price column I need to bin up that data
 # here are my binning parameters, the problem we face is some of the fares are very large
 # So we can either have a lot of bins with nothing in them or we can just lose some
-# information by just considering that anythng over 39 is simply in the last bin.
+# information by just considering that anything over 39 is simply in the last bin.
 # So we add a ceiling
 fare_ceiling = 40
 # then modify the data in the Fare column to = 39, if it is greater or equal to the ceiling
@@ -39,8 +43,8 @@ number_of_classes = len(np.unique(data[0::,2]))   # But it's better practice to 
 survival_table = np.zeros([2,number_of_classes,number_of_price_brackets],float)
 
 # I can now find the stats of all the women and men on board
-for i in xrange(number_of_classes):
-    for j in xrange(number_of_price_brackets):
+for i in range(number_of_classes):
+    for j in range(number_of_price_brackets):
 
         women_only_stats = data[ (data[0::,4] == "female") \
                                  & (data[0::,2].astype(np.float) == i+1) \
