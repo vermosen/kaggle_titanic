@@ -8,9 +8,14 @@ Revised: 28 March 2014
 
 import csv as csv
 import numpy as np
+from os.path import abspath, expanduser
 
-csv_file_object = csv.reader(open('train.csv', 'rb')) 	# Load in the csv file
-header = csv_file_object.next() 						# Skip the fist line as it is a header
+filepath = abspath(expanduser("~/") + '/Documents/GitHub/kaggle_titanic')
+
+
+csv_file_object = csv.reader(                           # Load in the csv file
+    open(filepath + '/train.csv'))
+header = next(csv_file_object)  						# Skip the fist line as it is a header
 data=[] 												# Create a variable to hold the data
 
 for row in csv_file_object: 							# Skip through each row in the csv file,
@@ -24,14 +29,14 @@ data = np.array(data) 									# Then convert from a list to an array.
 # when appending the rows, python thought it was a string - so needed to convert
 
 # Set some variables
-number_passengers = np.size(data[0::,1].astype(np.float))
-number_survived = np.sum(data[0::,1].astype(np.float))
+number_passengers    = np.size(data[0::,1].astype(np.float))
+number_survived      = np.sum(data[0::,1].astype(np.float))
 proportion_survivors = number_survived / number_passengers 
 
 # I can now find the stats of all the women on board,
 # by making an array that lists True/False whether each row is female
 women_only_stats = data[0::,4] == "female" 	# This finds where all the women are
-men_only_stats = data[0::,4] != "female" 	# This finds where all the men are (note != means 'not equal')
+men_only_stats = data[0::,4]   != "female" 	# This finds where all the men are (note != means 'not equal')
 
 # I can now filter the whole data, to find statistics for just women, by just placing
 # women_only_stats as a "mask" on my full data -- Use it in place of the '0::' part of the array index. 
