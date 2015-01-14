@@ -50,7 +50,7 @@ proportion_women_survived = np.sum(women_onboard) / np.size(women_onboard)
 proportion_men_survived = np.sum(men_onboard) / np.size(men_onboard)
 
 print('Proportion of women who survived is %s' % proportion_women_survived)
-print('Proportion of men who survived is %s' % proportion_men_survived)
+print('Proportion of men who survived is %s'   % proportion_men_survived  )
 
 # Now that I have my indicator that women were much more likely to survive,
 # I am done with the training set.
@@ -59,7 +59,7 @@ print('Proportion of men who survived is %s' % proportion_men_survived)
 # if male, then model that he did not survive (0)
 
 # First, read in test.csv
-test_file = open('test.csv', 'rb')
+test_file = open(filepath + '/test.csv')
 test_file_object = csv.reader(test_file)
 header = test_file_object.next()
 
